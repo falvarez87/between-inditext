@@ -1,0 +1,80 @@
+openapi: 3.0.2
+info:
+  title: Ecommerce
+  description: "Prueba técnica Between"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: falvarezh87@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1-SNAPSHOT
+servers:
+  - url: https://www.between.tech
+tags:
+  - name: price
+    description: Operations about prices
+#Acepte como parámetros de entrada: fecha de aplicación, identificador de producto, identificador de cadena.
+paths:
+  /price:
+    get:
+      tags:
+        - price
+      parameters:
+        - name: date
+          in: query
+          description: Application date for example 2022-10-26T22:50:57.597Z
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: product_id
+          in: query
+          description: Product identification for example 35455
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: brand_id
+          in: query
+          description: Brand identification for example 1=Zara
+          required: true
+          schema:
+            type: integer
+            format: int32
+      summary: Get price
+      operationId: getLastPrice
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceDTO'
+        400:
+          description: Invalid input
+        404:
+          description: Price not found
+components:
+  schemas:
+    PriceDTO:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          format: int32
+        brand_id:
+          type: integer
+          format: int32
+        price_list:
+          type: integer
+          format: int32
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+        final_price:
+          type: number
+          format: double
